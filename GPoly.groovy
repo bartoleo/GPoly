@@ -36,7 +36,7 @@ class GPoly {
     }
     def propertyMissing(String name) { 
         if (_vars.containsKey(name)){
-            _resolve name, _vars[name]
+            _resolve name
         } else {
             name
         }
@@ -44,7 +44,8 @@ class GPoly {
     def _set(String name, value) { 
         _vars[name] = value 
     }
-    def _resolve(name, value){
+    def _resolve(name){
+        def value = _vars[name]
         if (value instanceof List){
             if (value.size()==0){
                 return "'${name}:empty!"
@@ -70,13 +71,31 @@ class GPoly {
     def output(text){
         //def engine = new groovy.text.GStringTemplateEngine()
         //def binding = [:]
-        //def template = engine.createTemplate(text).make(binding)
+        //def template = engine.createTemplate(text).make()
         //return template.toString()
         //println {->return text.toString}
         //println '"'+text.toString()+'"'
-        //println GroovyShell.evaluate('return "'+text.toString()+'"')
-        //println text.toString()
-        text
+        GPolyBinding gpolyBinding = new GPolyBinding(this)
+        GroovyShell shell = new GroovyShell(gpolyBinding);
+        while (text.contains('${')){
+            text = shell.evaluate('return "'+text.toString()+'".toString()')
+        }
+        return text
     }
 
 }  
+public class GPolyBinding extends Binding {
+        
+    GPoly gpoly
+
+    GPolyBinding(GPoly gpoly){
+        this.gpoly = gpoly
+    }
+
+    public Object  getVariable(String name) {
+        return gpoly._resolve(name)
+    }
+    public void setVariable(String name, Object value) {
+        throw new RuntimeException("variable "+name+" is read only");
+    }
+}
