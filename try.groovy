@@ -3,11 +3,13 @@ println GPoly.make {
 	//_settings << [twovalues:[remove:false]]
 	//_settings << [remove:false]
     noun = [apple, banana]
+    adjectif = [red, green, yellow, big, small]
     animal = [ape, horse]
-    //verb = [eats, launches]
     verb = new File("verbs.json")
-    adverb = "https://raw2.github.com/ifnull/buzzwords/master/data/adverbs.json".toURL()
+    //adverb = "https://raw2.github.com/ifnull/buzzwords/master/data/adverbs.json".toURL()
+    adverb = [frequently, fully]
     range = 1..3
-    subject = animal
-    phrase = ['1 ${subject} ${verb} ${range} ${noun} ${adverb}','2 ${subject} ${verb} ${range} ${noun} ${adverb}','3 ${subject} ${verb} ${range} ${noun} ${adverb}']
+    subject = [animal, '${adjectif} ${animal}']
+    object = [noun, '${adjectif} ${noun}']
+    phrase = '${subject} ${verb} ${range} ${object} ${adverb}'
 }.output('${phrase}')
