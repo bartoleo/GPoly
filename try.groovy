@@ -5,6 +5,7 @@ println GPoly.make {
     noun = [apple, banana]
     animal = [ape, horse]
     verb = [eats, launches]
+    range = 1..3
     subject = animal
-    phrase = ['1 ${subject} ${verb} ${noun}','2 ${subject} ${verb} ${noun}','3 ${subject} ${verb} ${noun}']
+    phrase = ['1 ${subject} ${verb} ${range} ${noun}','2 ${subject} ${verb} ${range}  ${noun}','3 ${subject} ${verb} ${range} ${noun}']
 }.output('${phrase}')

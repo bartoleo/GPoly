@@ -42,7 +42,15 @@ class GPoly {
         }
     }
     def _set(String name, value) { 
-        _vars[name] = value 
+        if (value instanceof Range ){
+            def _list = []
+            value.each{
+                _list << it
+            }
+            _vars[name] = _list
+        } else {
+            _vars[name] = value 
+        }
     }
     def _resolve(name){
         def value = _vars[name]
