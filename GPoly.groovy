@@ -2,6 +2,7 @@ class GPoly {
 
     def _vars=[:]
     def _random
+    def _settings=[:]
 
     /**
      * This method accepts a closure which is essentially the DSL. Delegate the 
@@ -49,13 +50,21 @@ class GPoly {
                 return "'${name}:empty!"
             }
             int index=_random.nextInt(value.size())
-            if (_remove(value)){
+            if (_remove(name)){
                 return value.remove((int)index)
             } else {
                 return value[index]
             }
         } 
         return value
+    }
+    def _remove(name){
+        if (_settings&&_settings.containsKey(name)&&_settings[name].containsKey("remove")){
+            return _settings[name].remove
+        } else if (_settings.containsKey("remove")){
+            return _settings.remove
+        }
+        return true
     }
 
     def output(text){

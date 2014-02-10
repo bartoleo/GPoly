@@ -1,4 +1,4 @@
-GroovyRandomContent
-===================
+GPoly
+=====
 
-Groovy Random Content with easy DSL declaration
+define random content using easy DSL
