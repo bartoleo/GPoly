@@ -1,3 +1,5 @@
+import groovy.json.JsonSlurper
+
 class GPoly {
 
     def _vars=[:]
@@ -42,7 +44,11 @@ class GPoly {
         }
     }
     def _set(String name, value) { 
-        if (value instanceof Range ){
+        if (value instanceof File){
+            _vars[name] = _parseFile(value)
+        } else if (value instanceof URL){
+            _vars[name] = _parseFromUrl(value)
+        } else if (value instanceof Range ){
             def _list = []
             value.each{
                 _list << it
@@ -75,7 +81,24 @@ class GPoly {
         }
         return true
     }
-
+    def _parseFile(file) { 
+        def values = _parseJSONString(file.text)
+    }
+    def _parseFromUrl(url) { 
+        File tempFile = File.createTempFile("tempGPoly",".resource")
+        _downloadFile(url, tempFile)
+        def values = _parseJSONString(tempFile.text)
+        tempFile.delete()
+        return values
+    }
+    def _parseJSONString(text){
+        return new JsonSlurper().parseText(text).data
+    }
+    def _downloadFile(URL remoteUrl, File file) {
+       file.withOutputStream { out ->
+            remoteUrl.withInputStream { from ->  out << from; }
+        }
+    }
     def output(text){
         //def engine = new groovy.text.GStringTemplateEngine()
         //def binding = [:]
