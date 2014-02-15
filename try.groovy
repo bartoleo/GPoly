@@ -5,9 +5,10 @@ println GPoly.make {
     noun = [apple, banana]
     adjectif = [red, green, yellow, big, small]
     animal = [ape, horse]
+    from file
     verb = new File("verbs.json")
-    //adverb = "https://raw2.github.com/ifnull/buzzwords/master/data/adverbs.json".toURL()
-    adverb = [frequently, fully]
+    // fom url
+    adverb = "https://raw2.github.com/ifnull/buzzwords/master/data/adverbs.json".toURL()
     range = 1..3
     subject = [animal, '${adjectif} ${animal}']
     object = [noun, '${adjectif} ${noun}']

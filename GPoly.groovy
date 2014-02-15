@@ -37,6 +37,9 @@ class GPoly {
         _set name, value
     }
     def propertyMissing(String name) { 
+        _get name
+    }
+    def _get(name){
         if (_vars.containsKey(name)){
             _resolve name
         } else {
@@ -62,13 +65,13 @@ class GPoly {
         def value = _vars[name]
         if (value instanceof List){
             if (value.size()==0){
-                return "'${name}:empty!"
+                return "${name}:empty!"
             }
             int index=_random.nextInt(value.size())
             if (_remove(name)){
-                return value.remove((int)index)
+                return _resolveGString(value.remove((int)index))
             } else {
-                return value[index]
+                return _resolveGString(value[index])
             }
         } 
         return value
@@ -105,13 +108,21 @@ class GPoly {
         //def template = engine.createTemplate(text).make()
         //return template.toString()
         //println {->return text.toString}
-        //println '"'+text.toString()+'"'
+        //println '"'+text.toString()+'"'        
+        return _resolveGString(text)
+    }
+    def _resolveGString(text){
+        def textResolved
         GPolyBinding gpolyBinding = new GPolyBinding(this)
         GroovyShell shell = new GroovyShell(gpolyBinding);
-        while (text.contains('${')){
-            text = shell.evaluate('return "'+text.toString()+'".toString()')
+        textResolved = text
+        while (textResolved?.contains('${')){
+            textResolved = shell.evaluate('return "'+textResolved.toString()+'".toString()')
         }
-        return text
+        return textResolved
+    }
+    def _constant(text){
+        return _resolveGString(_get(text))
     }
 
 }  
