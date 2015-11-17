@@ -116,8 +116,10 @@ class GPoly {
         GPolyBinding gpolyBinding = new GPolyBinding(this)
         GroovyShell shell = new GroovyShell(gpolyBinding);
         textResolved = text
-        while (textResolved?.contains('${')){
-            textResolved = shell.evaluate('return "'+textResolved.toString()+'".toString()')
+        if (textResolved instanceof String){
+            while (textResolved?.contains('${')){
+                textResolved = shell.evaluate('return "'+textResolved.toString()+'".toString()')
+            }            
         }
         return textResolved
     }

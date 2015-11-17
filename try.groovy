@@ -8,7 +8,7 @@ println GPoly.make {
     from file
     verb = new File("verbs.json")
     // fom url
-    adverb = "https://raw2.github.com/ifnull/buzzwords/master/data/adverbs.json".toURL()
+    adverb = "https://raw.githubusercontent.com/aubricus/buzzwords/master/data/adverbs.json".toURL()
     range = 1..3
     subject = [animal, '${adjectif} ${animal}']
     object = [noun, '${adjectif} ${noun}']
