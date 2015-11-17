@@ -1,26 +1,9 @@
-@GrabResolver(name='java.net-m2', 
-          root='https://repository.jboss.org/nexus/content/repositories/java.net-m2')
-     @Grab(
-       group='org.mobicents.external.freetts', 
-       module='freetts', 
-       version='1.0'
-     )
-     @Grab(
-       group='captcha-sound', 
-       module='kevin-voice', 
-       version='1.0'
-     )
-     @Grab(
-       group='captcha-sound', 
-       module='lexicon', 
-       version='1.0'
-     )
-          @Grab(
-       group='captcha-sound', 
-       module='voice-en', 
-       version='1.0'
-     )
-
+@Grab(group='org.mobicents.external.freetts', module='freetts', version='1.0')
+@Grab(group='org.mobicents.external.freetts', module='en_us', version='1.0')
+@Grab(group='org.mobicents.external.freetts', module='cmu_us_kal', version='1.0')
+@Grab(group='org.mobicents.external.freetts', module='cmu_time_awb', version='1.0')
+@Grab(group='org.mobicents.external.freetts', module='cmulex', version='1.0')
+@Grab(group='org.mobicents.external.freetts', module='cmutimelex', version='1.0')
 
 import com.sun.speech.freetts.Voice;
 import com.sun.speech.freetts.VoiceManager;
@@ -45,8 +28,9 @@ def storia = GPoly.make {
 println storia
 
 Voice voice;
-  VoiceManager voiceManager = VoiceManager.getInstance();
-  voiceManager.getVoiceInfo()
-  voice = voiceManager.getVoice("kevin");
-  voice.allocate();
-  voice.speak(storia);
+VoiceManager voiceManager = VoiceManager.getInstance();
+voiceManager.getVoiceInfo()
+//voiceManager.getVoices().each{ println it.name}
+voice = voiceManager.getVoice("kevin16");
+voice.allocate();
+voice.speak(storia);
