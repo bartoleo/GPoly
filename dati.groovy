@@ -12,7 +12,7 @@ Random random = new Random()
       via = ['Via','Piazza','Corso','Vicolo']
       numero = 1..100
       attivo = random.nextInt(7)?1:0
-      record = '${cognome} ${nome}#${citta} - ${via} ${citta}, ${numero}#${attivo}#'+progr
+      record = 'CLI${cognome.padRight(20)}${nome.padRight(20)}${citta.padRight(30)}${(via+" "+citta+", 0"+numero).padRight(40)}${attivo}'+progr.toString().padLeft(10,'0')
   }.output('${record}')
   println dati
 }
